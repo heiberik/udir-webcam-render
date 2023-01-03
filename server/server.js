@@ -30,12 +30,11 @@ io.on("connection", (socket) => {
     let device = null
 
     socket.on('joinRoom', function(data) {
-
         room = data.room
         device = data.device
         socket.join(room);
-        io.to(room).emit("deviceConnected", { device, parts: rooms[room] })
         joinRoom(device, room)
+        io.to(room).emit("deviceConnected", { device, parts: rooms[room] })
     })
 
     socket.on('sendData', function(data) {
@@ -43,8 +42,8 @@ io.on("connection", (socket) => {
     })
 
     socket.on("disconnect", () => {
-        io.to(room).emit("deviceDisconnected", { device, parts: rooms[room] })
         leaveRoom(device, room)
+        io.to(room).emit("deviceDisconnected", { device, parts: rooms[room] })
     })
 })
 
