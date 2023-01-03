@@ -29,6 +29,8 @@ io.on("connection", (socket) => {
     })
 
     socket.on('PCImobileAck', function(data) {
+
+        console.log("HEHEE: ", data);
         io.to(data.room).emit("mobileAck", { name: data.name })
     })
 

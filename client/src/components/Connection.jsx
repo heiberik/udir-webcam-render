@@ -16,7 +16,7 @@ const Connection = ({ socket }) => {
         if (!socket) return
 
         socket.on("mobileAck", (data) => {
-            console.log("SETTING MOBILE ACK!");
+            console.log("SETTING MOBILE ACK!: ", data);
             setAckedName(data.name)
         })
 
