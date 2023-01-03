@@ -33,7 +33,7 @@ const Connection = ({ socket }) => {
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        bottom: "5vh",
+        top: "20vh",
         left: "5vw",
         width: "calc(90vw - 4rem)",
         borderRadius: "1rem",
