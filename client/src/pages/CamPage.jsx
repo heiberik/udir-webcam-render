@@ -1,9 +1,9 @@
 import { useState } from "react"
 import Buttons from "../components/Buttons"
 import Camera from "../components/Camera"
+import Connection from "../components/Connection"
 
-import Message from "../components/Message"
-const CamPage = ({ socket, setMessage, setCodeMessage, codeMessage }) => {
+const CamPage = ({ socket, setMessage, codeMessage }) => {
 
     const [camActive, setCamActive] = useState(false)
 
@@ -17,10 +17,11 @@ const CamPage = ({ socket, setMessage, setCodeMessage, codeMessage }) => {
                 />
                 :
                 <>
-                    <Message message={codeMessage} setMessage={setCodeMessage} codeMesage={true} />
                     <Buttons
                         setCamActive={setCamActive}
                     />
+                    <Connection codeMessage={codeMessage} socket={socket} />
+
                 </>
             }
 

@@ -24,19 +24,23 @@ if (process.env.PORT) {
 
 io.on("connection", (socket) => {
 
-    socket.on('connectionEstablished', function (data) {
-        io.to(data.room).emit("waitingForConnection", { connectionName: data.connectionName })
+    socket.on('mobileClientConnectionEstablished', function(data) {
+        io.to(data.room).emit("mobileClientConnected", { connectionName: data.connectionName })
     })
 
-    socket.on('joinRoom', function (room) {
+    socket.on('PCImobileAck', function(data) {
+        io.to(data.room).emit("mobileAck", { name: data.name })
+    })
+
+    socket.on('joinRoom', function(room) {
         socket.join(room);
     })
 
-    socket.on('sendData', function (data) {
+    socket.on('sendData', function(data) {
         io.to(data.room).emit("sendImageToPCI", { image: data.image })
     })
 
-    socket.on("disconnect", () => { })
+    socket.on("disconnect", () => {})
 })
 
 
