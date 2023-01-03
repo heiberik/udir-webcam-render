@@ -22,6 +22,8 @@ if (process.env.PORT) {
     app.get('*', (req, res) => res.sendFile(path.join(__dirname + '/../client/build/index.html')))
 }
 
+const rooms = {}
+
 io.on("connection", (socket) => {
 
     let room = null
@@ -32,8 +34,8 @@ io.on("connection", (socket) => {
         room = data.room
         device = data.device
         socket.join(room);
-        io.to(room).emit("deviceConnected", { device, room })
-        console.log(device, " JOINED ROOM: ", room);
+        io.to(room).emit("deviceConnected", { device, parts: rooms[room] })
+        joinRoom(device, room)
     })
 
     socket.on('sendData', function(data) {
@@ -41,11 +43,27 @@ io.on("connection", (socket) => {
     })
 
     socket.on("disconnect", () => {
-
-        io.to(room).emit("deviceDisconnected", { device, room })
-        console.log(device, " LEFT ROOM: ", room);
+        io.to(room).emit("deviceDisconnected", { device, parts: rooms[room] })
+        leaveRoom(device, room)
     })
 })
+
+const joinRoom = (device, room) => {
+
+    if (!device || !room) return
+    if (!rooms[room]) rooms[room] = []
+    rooms[room].push(device)
+
+    console.log(device, " JOINED ROOM: ", room);
+}
+
+const leaveRoom = (device, room) => {
+
+    if (!device || !room) return
+    rooms[room] = rooms[room].filter(d => d !== device)
+
+    console.log(device, " LEFT ROOM: ", room);
+}
 
 
 const port = process.env.PORT || 3002

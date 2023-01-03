@@ -20,7 +20,7 @@ const Connection = ({ socket }) => {
         socket.on("deviceConnected", (data) => {
 
             if (data.device === "PCI"){
-                console.log("PCI CONNECTED!");
+                console.log("PCI CONNECTED: ", data.parts);
                 setAckedName(name)
             }            
         })
@@ -28,7 +28,7 @@ const Connection = ({ socket }) => {
         socket.on("deviceDisconnected", (data) => {
             
             if (data.device === "PCI"){
-                console.log("PCI DISCONNECTED!");
+                console.log("PCI DISCONNECTED: ", data.parts);
                 setAckedName(null)
             }   
         })
