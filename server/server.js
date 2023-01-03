@@ -24,6 +24,8 @@ if (process.env.PORT) {
 
 io.on("connection", (socket) => {
 
+    console.log("GOT SOCKET CONNECTION!");
+
     socket.on('mobileClientConnectionEstablished', function(data) {
         io.to(data.room).emit("mobileClientConnected", { connectionName: data.connectionName })
     })
