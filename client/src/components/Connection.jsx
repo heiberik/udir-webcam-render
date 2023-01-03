@@ -15,15 +15,23 @@ const Connection = ({ socket }) => {
 
         if (!socket) return
 
-        socket.on("mobileAck", (data) => {
-            console.log("SETTING MOBILE ACK!: ", data);
-            setAckedName(data.name)
+        socket.emit('joinRoom', { room: id, device: "MOBILE" });
+
+        socket.on("deviceConnected", (data) => {
+
+            if (data.device === "PCI"){
+                console.log("PCI CONNECTED!");
+                setAckedName(name)
+            }            
         })
 
-        socket.emit('joinRoom', id);
-        socket.emit("mobileClientConnectionEstablished", { connectionName: name, room: id })
-
-        console.log("SENDING MOBILE CLIENT ESTABLISHED!");
+        socket.on("deviceDisconnected", (data) => {
+            
+            if (data.device === "PCI"){
+                console.log("PCI DISCONNECTED!");
+                setAckedName(null)
+            }   
+        })
 
     }, [id, socket, name])
     

@@ -24,29 +24,27 @@ if (process.env.PORT) {
 
 io.on("connection", (socket) => {
 
-    console.log("GOT SOCKET CONNECTION!");
+    let room = null
+    let device = null
 
-    socket.on('mobileClientConnectionEstablished', function(data) {
+    socket.on('joinRoom', function(data) {
 
-        console.log("Server got mobile event from mobile client.");
-        io.to(data.room).emit("mobileClientConnected", { connectionName: data.connectionName })
-    })
-
-    socket.on('PCImobileAck', function(data) {
-
-        console.log("HEHEE: ", data);
-        io.to(data.room).emit("mobileAck", { name: data.name })
-    })
-
-    socket.on('joinRoom', function(room) {
+        room = data.room
+        device = data.device
         socket.join(room);
+        io.to(room).emit("deviceConnected", { device, room })
+        console.log(device, " JOINED ROOM: ", room);
     })
 
     socket.on('sendData', function(data) {
         io.to(data.room).emit("sendImageToPCI", { image: data.image })
     })
 
-    socket.on("disconnect", () => {})
+    socket.on("disconnect", () => {
+
+        io.to(room).emit("deviceDisconnected", { device, room })
+        console.log(device, " LEFT ROOM: ", room);
+    })
 })
 
 
