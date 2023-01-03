@@ -20,6 +20,7 @@ const Connection = ({ socket }) => {
             setAckedName(data.name)
         })
 
+        socket.emit('joinRoom', id);
         socket.emit("mobileClientConnectionEstablished", { connectionName: name, room: id })
 
         console.log("SENDING MOBILE CLIENT ESTABLISHED!");

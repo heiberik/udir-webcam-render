@@ -27,6 +27,8 @@ io.on("connection", (socket) => {
     console.log("GOT SOCKET CONNECTION!");
 
     socket.on('mobileClientConnectionEstablished', function(data) {
+
+        console.log("Server got mobile event from mobile client.");
         io.to(data.room).emit("mobileClientConnected", { connectionName: data.connectionName })
     })
 
