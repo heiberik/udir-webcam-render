@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.dfd05317.css","mappings":"AAAA,KACI,QACJ,CAEA,KACI,YAAa,CACb,qBACJ,CAEA,OACI,cACJ,CAEA,aACI,UACJ","sources":["App.css"],"sourcesContent":["body {\n    margin: 0;\n}\n\n.App {\n    display: flex;\n    flex-direction: column;\n}\n\nbutton {\n    cursor: pointer;\n}\n\nbutton:hover {\n    opacity: 0.8;\n}"],"names":[],"sourceRoot":""}

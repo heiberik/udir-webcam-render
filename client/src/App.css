@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    width: 100%;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#root {
+    height: 100vh;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+}
+
+.App .react-html5-camera-photo-fullscreen>video {
+    object-fit: cover;
+}
+
+button {
+    cursor: pointer;
+    color: black;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.App #container-circles {
+    bottom: 25%;
+}
