@@ -8,7 +8,9 @@ const QRPage = ({ setMessage, setCodeMessage, socket }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+
         if (socket) socket.emit('leaveRoom');
+        setMessage(null)
     }, [])
 
     const stopButtonStyle = {
