@@ -60,7 +60,7 @@ const Connection = ({ socket }) => {
     )
     else return (
         <div style={codeMessageStyle}>
-            <p style={textStyle}> Ikke tilkoblet </p>
+            <p style={textStyle}> Ikke tilkoblet kandidat </p>
         </div>
     )
 }
