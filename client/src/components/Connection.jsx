@@ -19,23 +19,23 @@ const Connection = ({ socket }) => {
 
         socket.on("deviceConnected", (data) => {
 
-            if (data.parts.includes("PCI")){
+            if (data.parts.includes("PCI")) {
                 console.log("PCI CONNECTED: ", data.parts);
                 setAckedName(name)
-            }            
+            }
         })
 
         socket.on("deviceDisconnected", (data) => {
-            
-            if (!data.parts.includes("PCI")){
+
+            if (!data.parts.includes("PCI")) {
                 console.log("PCI DISCONNECTED: ", data.parts);
                 setAckedName(null)
-            }   
+            }
         })
 
     }, [id, socket, name])
-    
- 
+
+
     const codeMessageStyle = {
         display: "flex",
         justifyContent: "center",
@@ -52,14 +52,16 @@ const Connection = ({ socket }) => {
         marginRight: "10px"
     }
 
-    return (
-        <>
-        {ackedName === name && 
-            <div style={codeMessageStyle}>
-                <p style={textStyle}> Koblet til: {name} </p>
-                <FaCheck size="1rem" color="green" />
-            </div>}
-        </>
+    if (ackedName === name) return (
+        <div style={codeMessageStyle}>
+            <p style={textStyle}> Koblet til: {name} </p>
+            <FaCheck size="1rem" color="green" />
+        </div>
+    )
+    else return (
+        <div style={codeMessageStyle}>
+            <p style={textStyle}> Ikke tilkoblet </p>
+        </div>
     )
 }
 

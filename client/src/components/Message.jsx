@@ -22,7 +22,7 @@ const Message = ({ message, setMessage }) => {
         borderRadius: "1rem",
         padding: "1rem 2rem"
     }
-    
+
     const textStyle = {
         marginLeft: "1rem"
     }

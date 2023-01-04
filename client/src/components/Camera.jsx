@@ -1,11 +1,16 @@
 import { useParams } from 'react-router-dom'
 import { Camera as CameraWidget, FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo'
 import 'react-html5-camera-photo/build/css/index.css'
+import { useEffect } from 'react'
 
 
 const Camera = ({ setCamActive, socket, setMessage }) => {
 
     const { id } = useParams()
+
+    useEffect(() => {
+        setMessage(null)
+    }, [])
 
     const stopButtonStyle = {
         position: "absolute",
