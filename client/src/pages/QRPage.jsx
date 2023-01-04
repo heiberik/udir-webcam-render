@@ -8,7 +8,7 @@ const QRPage = ({ setMessage, setCodeMessage, socket }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (socket) socket.disconnect()
+        if (socket) socket.emit('leaveRoom');
     }, [])
 
     const stopButtonStyle = {
@@ -58,7 +58,6 @@ const QRPage = ({ setMessage, setCodeMessage, socket }) => {
             const split = url.split("/")
             const id = split[split.length - 1]
 
-            if (socket) socket.connect()
             navigate("/" + id)
             setMessage("Du kan nå legge til bilder.")
         }

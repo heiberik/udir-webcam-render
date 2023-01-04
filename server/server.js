@@ -37,6 +37,13 @@ io.on("connection", (socket) => {
         io.to(room).emit("deviceConnected", { device, parts: rooms[room] })
     })
 
+    socket.on('leaveRoom', function() {
+        if (room) socket.leave(room);
+        leaveRoom(device, room)
+        io.to(room).emit("deviceDisconnected", { device, parts: rooms[room] })
+        room = null
+    })
+
     socket.on('sendData', function(data) {
         io.to(data.room).emit("sendImageToPCI", { image: data.image })
     })
