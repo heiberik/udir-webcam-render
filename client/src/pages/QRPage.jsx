@@ -1,11 +1,15 @@
 import { useNavigate } from "react-router-dom"
 import { QrReader } from 'react-qr-reader'
 import { getNameHash } from '../util/nameHash'
+import { useEffect } from "react";
 
 const QRPage = ({ setMessage, setCodeMessage, socket }) => {
 
     const navigate = useNavigate();
-    let connectionEstablished = false;
+
+    useEffect(() => {
+        if (socket) socket.disconnect()
+    }, [])
 
     const stopButtonStyle = {
         position: "absolute",
@@ -47,17 +51,16 @@ const QRPage = ({ setMessage, setCodeMessage, socket }) => {
     }
 
     const handleScan = (data) => {
+
         if (data) {
+
             const url = data.text
             const split = url.split("/")
             const id = split[split.length - 1]
-            if (id && !connectionEstablished) {
-                const name = getNameHash(id)
-                navigate("/" + id)
-                setMessage("Du kan nå legge til bilder.")
-               
-                connectionEstablished = true;
-            }
+
+            if (socket) socket.connect()
+            navigate("/" + id)
+            setMessage("Du kan nå legge til bilder.")
         }
     }
 

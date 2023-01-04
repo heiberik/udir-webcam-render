@@ -15,13 +15,15 @@ const Connection = ({ socket }) => {
 
         if (!socket) return
 
+        const idNAme = getNameHash(id)
+
         socket.emit('joinRoom', { room: id, device: "MOBILE" });
 
         socket.on("deviceConnected", (data) => {
 
             if (data.parts.includes("PCI")) {
                 console.log("PCI CONNECTED: ", data.parts);
-                setAckedName(name)
+                setAckedName(idNAme)
             }
         })
 
@@ -33,7 +35,7 @@ const Connection = ({ socket }) => {
             }
         })
 
-    }, [id, socket, name])
+    }, [id, socket])
 
 
     const codeMessageStyle = {
