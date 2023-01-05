@@ -77,7 +77,7 @@ const leaveRoom = (device, room) => {
     rooms[room] = rooms[room].filter(d => d !== device)
     room = null
 
-    if (rooms[room].length === 0) delete rooms[room]
+    if (rooms[room] && rooms[room].length === 0) delete rooms[room]
 
     console.log(device, " LEFT ROOM: ", room);
 }
