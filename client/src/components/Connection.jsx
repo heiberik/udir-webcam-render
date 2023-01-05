@@ -19,13 +19,7 @@ const Connection = ({ socket }) => {
 
         socket.emit('joinRoom', { room: id, device: "MOBILE" });
 
-        socket.on("deviceConnected", (data) => {
-
-            const pciInRoom = data.parts.includes("PCI")
-            setAckedName(pciInRoom ? idNAme : null)
-        })
-
-        socket.on("deviceDisconnected", (data) => {
+        socket.on("sendRoomParticipants", (data) => {
 
             const pciInRoom = data.parts.includes("PCI")
             setAckedName(pciInRoom ? idNAme : null)

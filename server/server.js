@@ -34,14 +34,13 @@ io.on("connection", (socket) => {
         device = data.device
         socket.join(room);
         joinRoom(device, room)
-        io.to(room).emit("deviceConnected", { device, parts: rooms[room] })
+        io.to(room).emit("sendRoomParticipants", { device, parts: rooms[room] })
     })
 
     socket.on('leaveRoom', function() {
         if (room) socket.leave(room);
         leaveRoom(device, room)
-        io.to(room).emit("deviceDisconnected", { device, parts: rooms[room] })
-        room = null
+        io.to(room).emit("sendRoomParticipants", { device, parts: rooms[room] })
     })
 
     socket.on('sendData', function(data) {
@@ -53,6 +52,14 @@ io.on("connection", (socket) => {
         io.to(room).emit("deviceDisconnected", { device, parts: rooms[room] })
     })
 })
+
+setInterval(() => {
+
+    for (const index in Object.keys(rooms)) {
+        const room = Object.keys(rooms)[index]
+        io.to(room).emit("sendRoomParticipants", { parts: rooms[room] })
+    }
+}, 2000)
 
 const joinRoom = (device, room) => {
 
@@ -67,6 +74,7 @@ const leaveRoom = (device, room) => {
 
     if (!device || !room) return
     rooms[room] = rooms[room].filter(d => d !== device)
+    room = null
 
     console.log(device, " LEFT ROOM: ", room);
 }
