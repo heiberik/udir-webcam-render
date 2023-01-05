@@ -5,12 +5,11 @@ import { useParams } from 'react-router-dom';
 import { getNameHash } from '../util/nameHash';
 
 
-const Connection = ({ socket }) => {
+const Connection = ({ socket, setMessage }) => {
 
     const { id } = useParams()
     const name = getNameHash(id)
     const [ackedName, setAckedName] = useState(null)
-    const [check, setCheck] = useState("")
 
     useEffect(() => {
 
@@ -22,11 +21,19 @@ const Connection = ({ socket }) => {
         socket.on("sendRoomParticipants", (data) => {
             const connection = data.parts.includes("PCI") && data.parts.includes("MOBILE")
             setAckedName(connection ? idName : null)
-
-            setCheck(c => c.includes("+") ? data.parts + " - " : data.parts + " + ")
         })
 
     }, [id, socket])
+
+    useEffect(() => {
+
+        const handleVisibilityChange = () => {  
+            setMessage(document.visibilityState)
+        }
+
+        document.addEventListener("pagevisibilitychange", handleVisibilityChange);
+        return () => document.removeEventListener("pagevisibilitychange", handleVisibilityChange)
+    }, [])
 
 
     const codeMessageStyle = {
@@ -49,13 +56,11 @@ const Connection = ({ socket }) => {
         <div style={codeMessageStyle}>
             <p style={textStyle}> Koblet til: {name} </p>
             <FaCheck size="1rem" color="green" />
-            <p> {check} </p>
         </div>
     )
     else return (
         <div style={codeMessageStyle}>
             <p style={textStyle}> Ikke tilkoblet kandidat </p>
-            <p> {check} </p>
         </div>
     )
 }

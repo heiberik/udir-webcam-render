@@ -59,6 +59,8 @@ setInterval(() => {
         const room = Object.keys(rooms)[index]
         console.log("ROOM: ", room, " - ", rooms[room]);
         io.to(room).emit("sendRoomParticipants", { parts: rooms[room] })
+
+        if (rooms[room] && rooms[room].length === 0) delete rooms[room]
     }
 }, 2000)
 
@@ -76,8 +78,6 @@ const leaveRoom = (device, room) => {
     if (!device || !room) return
     rooms[room] = rooms[room].filter(d => d !== device)
     room = null
-
-    if (rooms[room] && rooms[room].length === 0) delete rooms[room]
 
     console.log(device, " LEFT ROOM: ", room);
 }

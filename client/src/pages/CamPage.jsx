@@ -20,7 +20,7 @@ const CamPage = ({ socket, setMessage, codeMessage }) => {
                     <Buttons
                         setCamActive={setCamActive}
                     />
-                    <Connection codeMessage={codeMessage} socket={socket} />
+                    <Connection codeMessage={codeMessage} socket={socket} setMessage={setMessage}/>
 
                 </>
             }
