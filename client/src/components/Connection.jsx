@@ -47,11 +47,12 @@ const Connection = ({ socket, setMessage }) => {
             }
         }
 
-        document.addEventListener("visibilitychange pagehide", handleVisibilityChange);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        window.addEventListener("pagehide", handleVisibilityChange)
 
         return () => {
             document.removeEventListener("visibilitychange", handleVisibilityChange)
-            document.removeEventListener("pagehide", handleVisibilityChange)
+            window.removeEventListener("pagehide", handleVisibilityChange)
         }
 
     }, [id, socket, setMessage])
