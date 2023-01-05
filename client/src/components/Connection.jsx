@@ -21,8 +21,8 @@ const Connection = ({ socket }) => {
 
         socket.on("sendRoomParticipants", (data) => {
 
-            const pciInRoom = data.parts.includes("PCI")
-            setAckedName(pciInRoom ? idNAme : null)
+            const connection = data.parts.includes("PCI") && data.parts.includes("MOBILE")
+            setAckedName(connection ? idNAme : null)
         })
 
     }, [id, socket])
