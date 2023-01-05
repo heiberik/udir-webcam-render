@@ -14,10 +14,14 @@ const App = () => {
     const [message, setMessage] = useState(null)
     const [codeMessage, setCodeMessage] = useState(null)
 
-
     useEffect(() => {
         if (!socket) setSocket(io())
     }, [socket])
+
+    useEffect(() => { 
+        setMessage("App opened!")
+        return () => { setMessage("App closed!")}
+    }, []);
 
     return (
         <div className="App">
