@@ -30,7 +30,7 @@ const Connection = ({ socket, setMessage }) => {
         if (!socket || !id) return
 
         const handleVisibilityChange = () => {  
-            
+
             setMessage(document.visibilityState)
 
             if (document.visibilityState === "hidden"){
@@ -42,7 +42,12 @@ const Connection = ({ socket, setMessage }) => {
         }
 
         document.addEventListener("visibilitychange", handleVisibilityChange);
-        return () => document.removeEventListener("visibilitychange", handleVisibilityChange)
+        document.addEventListener("pagehide", handleVisibilityChange)
+
+        return () => {
+            document.removeEventListener("visibilitychange", handleVisibilityChange)
+            document.removeEventListener("pagehide", handleVisibilityChange)
+        }
 
     }, [id, socket, setMessage])
 
