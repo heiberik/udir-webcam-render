@@ -35,9 +35,12 @@ io.on("connection", (socket) => {
         socket.join(room);
         joinRoom(device, room)
         io.to(room).emit("sendRoomParticipants", { device, parts: rooms[room] })
+        console.log("JOIN ROOM CALLED!");
     })
 
     socket.on('leaveRoom', function() {
+
+        console.log("LEAVE ROOM CALLED!");
         if (room) socket.leave(room);
         leaveRoom(device, room)
         io.to(room).emit("sendRoomParticipants", { device, parts: rooms[room] })

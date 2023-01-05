@@ -30,6 +30,7 @@ const Connection = ({ socket, setMessage }) => {
         if (!socket || !id) return
 
         const handleVisibilityChange = () => {  
+            
             setMessage(document.visibilityState)
 
             if (document.visibilityState === "hidden"){
