@@ -13,16 +13,14 @@ const Connection = ({ socket }) => {
 
     useEffect(() => {
 
-        if (!socket) return
+        if (!socket || !id) return
 
-        const idNAme = getNameHash(id)
+        const idName = getNameHash(id)
 
         socket.emit('joinRoom', { room: id, device: "MOBILE" });
-
         socket.on("sendRoomParticipants", (data) => {
-
             const connection = data.parts.includes("PCI") && data.parts.includes("MOBILE")
-            setAckedName(connection ? idNAme : null)
+            setAckedName(connection ? idName : null)
         })
 
     }, [id, socket])

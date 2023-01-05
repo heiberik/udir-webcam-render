@@ -57,6 +57,7 @@ setInterval(() => {
 
     for (const index in Object.keys(rooms)) {
         const room = Object.keys(rooms)[index]
+        console.log("ROOM: ", room, " - ", rooms[room]);
         io.to(room).emit("sendRoomParticipants", { parts: rooms[room] })
     }
 }, 2000)
