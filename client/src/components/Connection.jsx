@@ -37,12 +37,17 @@ const Connection = ({ socket, setMessage }) => {
                 socket.emit('leaveRoom');
             }
             else {
-                if (id) socket.emit('joinRoom', { room: id, device: "MOBILE" });
+                if (id) {
+                    socket.emit('joinRoom', { room: id, device: "MOBILE" });
+                    setMessage("JOINED ROOM :D")
+                }
+                else {
+                    setMessage("DID NOT JOIN ROOM :D")
+                }
             }
         }
 
-        document.addEventListener("visibilitychange", handleVisibilityChange);
-        document.addEventListener("pagehide", handleVisibilityChange)
+        document.addEventListener("visibilitychange pagehide", handleVisibilityChange);
 
         return () => {
             document.removeEventListener("visibilitychange", handleVisibilityChange)
