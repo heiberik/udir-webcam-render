@@ -27,13 +27,23 @@ const Connection = ({ socket, setMessage }) => {
 
     useEffect(() => {
 
+        if (!socket || !id) return
+
         const handleVisibilityChange = () => {  
             setMessage(document.visibilityState)
+
+            if (document.visibilityState === "hidden"){
+                socket.emit('leaveRoom');
+            }
+            else {
+                if (id) socket.emit('joinRoom', { room: id, device: "MOBILE" });
+            }
         }
 
-        document.addEventListener("pagevisibilitychange", handleVisibilityChange);
-        return () => document.removeEventListener("pagevisibilitychange", handleVisibilityChange)
-    }, [])
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        return () => document.removeEventListener("visibilitychange", handleVisibilityChange)
+
+    }, [id, socket, setMessage])
 
 
     const codeMessageStyle = {

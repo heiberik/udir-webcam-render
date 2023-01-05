@@ -57,10 +57,13 @@ setInterval(() => {
 
     for (const index in Object.keys(rooms)) {
         const room = Object.keys(rooms)[index]
-        console.log("ROOM: ", room, " - ", rooms[room]);
+        console.log("ROOM CHECK: ", room, " - ", rooms[room]);
         io.to(room).emit("sendRoomParticipants", { parts: rooms[room] })
 
-        if (rooms[room] && rooms[room].length === 0) delete rooms[room]
+        if (rooms[room] && rooms[room].length === 0) {
+            console.log("Deleting room");
+            delete rooms[room]
+        }
     }
 }, 2000)
 
