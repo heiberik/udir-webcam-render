@@ -14,7 +14,7 @@ const Connection = ({ socket, setMessage }) => {
 
     useEffect(() => {
 
-        if (!socket && !id && id.trim() === "") return
+        if (!socket || !id || id.trim() === "") return
 
         const idName = getNameHash(id)
         setSavedId(id)
@@ -30,7 +30,7 @@ const Connection = ({ socket, setMessage }) => {
 
     useEffect(() => {
 
-        if (!socket && !savedId) return
+        if (!socket || !savedId) return
 
         const handleVisibilityChange = () => {
 
