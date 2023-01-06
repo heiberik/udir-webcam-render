@@ -29,17 +29,16 @@ const Connection = ({ socket, setMessage }) => {
 
         if (!socket || !id) return
 
-        const handleVisibilityChange = () => {  
-
-            setMessage(document.visibilityState)
+        const handleVisibilityChange = () => {
 
             if (document.visibilityState === "hidden"){
                 socket.emit('leaveRoom');
             }
             else {
                 if (id) {
+                    if (!socket.connected) socket.connect()
                     socket.emit('joinRoom', { room: id, device: "MOBILE" });
-                    setMessage("JOINED ROOM :D")
+                    setMessage("JOINED ROOM: ", id)
                 }
                 else {
                     setMessage("DID NOT JOIN ROOM :D")
