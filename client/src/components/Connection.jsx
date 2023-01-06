@@ -10,12 +10,14 @@ const Connection = ({ socket, setMessage }) => {
     const { id } = useParams()
     const name = getNameHash(id)
     const [ackedName, setAckedName] = useState(null)
+    const [savedId, setSavedId] = useState(null)
 
     useEffect(() => {
 
         if (!socket || !id) return
 
         const idName = getNameHash(id)
+        setSavedId(id)
 
         socket.emit('joinRoom', { room: id, device: "MOBILE" });
         socket.on("sendRoomParticipants", (data) => {
@@ -27,7 +29,7 @@ const Connection = ({ socket, setMessage }) => {
 
     useEffect(() => {
 
-        if (!socket || !id) return
+        if (!socket || !savedId) return
 
         const handleVisibilityChange = () => {
 
@@ -35,10 +37,10 @@ const Connection = ({ socket, setMessage }) => {
                 socket.emit('leaveRoom');
             }
             else {
-                if (id) {
+                if (savedId) {
                     if (!socket.connected) socket.connect()
-                    socket.emit('joinRoom', { room: id, device: "MOBILE" });
-                    setMessage("JOINED ROOM: ", id)
+                    socket.emit('joinRoom', { room: savedId, device: "MOBILE" });
+                    setMessage("JOINED ROOM: ", savedId)
                 }
                 else {
                     setMessage("DID NOT JOIN ROOM :D")
@@ -54,7 +56,7 @@ const Connection = ({ socket, setMessage }) => {
             window.removeEventListener("pagehide", handleVisibilityChange)
         }
 
-    }, [id, socket, setMessage])
+    }, [savedId, socket, setMessage])
 
 
     const codeMessageStyle = {
