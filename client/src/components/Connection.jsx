@@ -14,10 +14,11 @@ const Connection = ({ socket, setMessage }) => {
 
     useEffect(() => {
 
-        if (!socket || !id || id.trim() === "") return
+        if (!socket && !id && id.trim() === "") return
 
         const idName = getNameHash(id)
         setSavedId(id)
+        setMessage("ID: ", id)
 
         socket.emit('joinRoom', { room: id, device: "MOBILE" });
         socket.on("sendRoomParticipants", (data) => {
@@ -29,7 +30,7 @@ const Connection = ({ socket, setMessage }) => {
 
     useEffect(() => {
 
-        if (!socket || !savedId) return
+        if (!socket && !savedId) return
 
         const handleVisibilityChange = () => {
 
