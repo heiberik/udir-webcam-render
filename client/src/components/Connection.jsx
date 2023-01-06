@@ -14,7 +14,7 @@ const Connection = ({ socket, setMessage }) => {
 
     useEffect(() => {
 
-        if (!socket || !id) return
+        if (!socket || !id || id.trim() === "") return
 
         const idName = getNameHash(id)
         setSavedId(id)
