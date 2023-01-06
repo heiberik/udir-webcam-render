@@ -18,7 +18,6 @@ const Connection = ({ socket, setMessage }) => {
 
         const idName = getNameHash(id)
         setSavedId(id)
-        setMessage("ID: " + id)
 
         socket.emit('joinRoom', { room: id, device: "MOBILE" });
         socket.on("sendRoomParticipants", (data) => {
@@ -32,7 +31,7 @@ const Connection = ({ socket, setMessage }) => {
 
         if (!socket || !savedId) return
 
-        const handleVisibilityChange = () => {
+        function handleVisibilityChange() {
 
             if (document.visibilityState === "hidden"){
                 socket.emit('leaveRoom');
@@ -41,10 +40,6 @@ const Connection = ({ socket, setMessage }) => {
                 if (savedId) {
                     if (!socket.connected) socket.connect()
                     socket.emit('joinRoom', { room: savedId, device: "MOBILE" });
-                    setMessage("JOINED ROOM: ", savedId)
-                }
-                else {
-                    setMessage("DID NOT JOIN ROOM :D")
                 }
             }
         }
