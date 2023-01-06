@@ -35,12 +35,10 @@ io.on("connection", (socket) => {
         socket.join(room);
         joinRoom(device, room)
         io.to(room).emit("sendRoomParticipants", { device, parts: rooms[room] })
-        console.log("JOIN ROOM CALLED!");
     })
 
     socket.on('leaveRoom', function() {
 
-        console.log("LEAVE ROOM CALLED!");
         if (room) socket.leave(room);
         leaveRoom(device, room)
         io.to(room).emit("sendRoomParticipants", { device, parts: rooms[room] })
@@ -62,11 +60,9 @@ setInterval(() => {
 
     for (const index in Object.keys(rooms)) {
         const room = Object.keys(rooms)[index]
-        console.log("ROOM CHECK: ", room, " - ", rooms[room]);
         io.to(room).emit("sendRoomParticipants", { parts: rooms[room] })
 
         if (rooms[room] && rooms[room].length === 0) {
-            console.log("Deleting room");
             delete rooms[room]
         }
     }
@@ -77,14 +73,12 @@ const joinRoom = (device, room) => {
     if (!device || !room) return
     if (!rooms[room]) rooms[room] = []
     rooms[room].push(device)
-    console.log(device, " JOINED ROOM: ", room);
 }
 
 const leaveRoom = (device, room) => {
 
     if (!device || !room) return
     if (rooms[room]) rooms[room] = rooms[room].filter(d => d !== device)
-    console.log(device, " LEFT ROOM: ", room);
 }
 
 

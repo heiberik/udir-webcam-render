@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { QrReader } from 'react-qr-reader'
-import { getNameHash } from '../util/nameHash'
 import { useEffect } from "react";
 
-const QRPage = ({ setMessage, setCodeMessage, socket }) => {
+const QRPage = ({ setMessage, socket }) => {
 
     const navigate = useNavigate();
 
@@ -61,7 +60,6 @@ const QRPage = ({ setMessage, setCodeMessage, socket }) => {
             const id = split[split.length - 1]
 
             navigate("/" + id)
-            setMessage("Du kan nå legge til bilder.")
         }
     }
 
