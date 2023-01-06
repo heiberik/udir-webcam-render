@@ -18,7 +18,7 @@ const Connection = ({ socket, setMessage }) => {
 
         const idName = getNameHash(id)
         setSavedId(id)
-        setMessage("ID: ", id)
+        setMessage("ID: " + id)
 
         socket.emit('joinRoom', { room: id, device: "MOBILE" });
         socket.on("sendRoomParticipants", (data) => {
